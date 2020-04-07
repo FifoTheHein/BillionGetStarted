@@ -11,7 +11,7 @@ namespace GraphQLAPI.GraphQL
         public BillionMutation(AirportRepository airportRepository, CityRepository cityRepository)
         {
             FieldAsync<CityType>(
-                "createCity",
+                "mutateCity",
                 arguments: new QueryArguments(
                     new QueryArgument<NonNullGraphType<CityInputType>> {Name = "city"}), 
                
@@ -33,7 +33,7 @@ namespace GraphQLAPI.GraphQL
                 });
 
             FieldAsync<AirportType>(
-                "createAirport",
+                "mutateAirport",
                 arguments: new QueryArguments(
                     new QueryArgument<NonNullGraphType<AirportInputType>> {Name = "airport"}), 
                
