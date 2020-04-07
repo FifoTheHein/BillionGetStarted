@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using GraphQLAPI;
 using GraphQLAPI.Data;
@@ -36,10 +35,10 @@ namespace CarvedRock.Api.Repositories
 
         public async Task<ILookup<Guid, Airport>> GetForCities(IEnumerable<Guid> cityIds)
         {
-            var reviews = await _dbContext.Airport
+            var airports = await _dbContext.Airport
                 .Where(pr => cityIds.Contains(pr.CityID))
                 .ToListAsync();
-            return reviews.ToLookup(r => r.CityID);
+            return airports.ToLookup(r => r.CityID);
         }
 
         public async Task<Airport> AddAirport(Airport airport)
