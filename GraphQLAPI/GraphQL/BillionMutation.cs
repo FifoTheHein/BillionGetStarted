@@ -18,7 +18,6 @@ namespace GraphQLAPI.GraphQL
                 resolve: async context =>
                 {
                     var city = context.GetArgument<City>("city");
-                    
                     City result;
 
                     if(city.CityID == Guid.Empty)
