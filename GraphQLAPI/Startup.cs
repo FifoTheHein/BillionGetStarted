@@ -1,9 +1,9 @@
-using CarvedRock.Api.Repositories;
 using GraphQL;
 using GraphQL.Server;
 using GraphQL.Server.Ui.Playground;
 using GraphQLAPI.Data;
 using GraphQLAPI.GraphQL;
+using GraphQLAPI.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;

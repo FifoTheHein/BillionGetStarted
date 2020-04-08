@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CarvedRock.Api.Repositories;
-using GraphQL.Types;
+﻿using GraphQL.Types;
 using GraphQLAPI.GraphQL.Types;
+using GraphQLAPI.Repositories;
 
 namespace GraphQLAPI.GraphQL.Queries
 {

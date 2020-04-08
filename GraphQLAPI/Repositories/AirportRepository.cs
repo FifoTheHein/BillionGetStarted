@@ -1,13 +1,11 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GraphQLAPI;
 using GraphQLAPI.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace CarvedRock.Api.Repositories
+namespace GraphQLAPI.Repositories
 {
     public class AirportRepository
     {

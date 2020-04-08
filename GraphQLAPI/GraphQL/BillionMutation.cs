@@ -1,8 +1,8 @@
 ﻿using System;
-using CarvedRock.Api.Repositories;
 using GraphQL;
 using GraphQL.Types;
 using GraphQLAPI.GraphQL.Types;
+using GraphQLAPI.Repositories;
 
 namespace GraphQLAPI.GraphQL
 {
