@@ -20,7 +20,9 @@ namespace CarvedRock.Api.Repositories
 
         public async Task<IEnumerable<Airport>> GetAll()
         {
-            return await _dbContext.Airport.ToListAsync();
+            return await _dbContext.Airport
+                .Include(airport => airport.City)
+                .ToListAsync();
         }
 
         public async Task<Airport> GetOne(string IATACode)

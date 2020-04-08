@@ -5,6 +5,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GraphQLAPI
 {
+    public class City
+    {
+        public Guid CityID { get; set; }
+        public bool IsDeleted { get; set; }
+        [Required]
+        [MaxLength(200)]
+        public string Title { get; set; }
+
+        public List<Airport> Airports { get; } = new List<Airport>();
+    }
+
     public class Airport
     {
         public Guid AirportID { get; set; }
@@ -31,14 +42,5 @@ namespace GraphQLAPI
 
     }
 
-    public class City
-    {
-        public Guid CityID { get; set; }
-        public bool IsDeleted { get; set; }
-        [Required]
-        [MaxLength(200)]
-        public string Title { get; set; }
-
-        public List<Airport> Airports { get; } = new List<Airport>();
-    }
+   
 }

@@ -12,9 +12,9 @@ namespace GraphQLAPI.GraphQL.Queries
     {
         public BillionQuery(CityRepository cityRepository, AirportRepository airportRepository)
         {
-            Field<ListGraphType<CityType>>("cities", description: "Query to get a list of cities", resolve: fieldContext => cityRepository.GetAll());
+            Field<ListGraphType<CityType>>("cityList", description: "Query to get a list of cities", resolve: fieldContext => cityRepository.GetAll());
 
-            Field<ListGraphType<AirportType>>("airports", description: "Query to get a list of airports", resolve: fieldContext => airportRepository.GetAll());
+            Field<ListGraphType<AirportType>>("airportList", description: "Query to get a list of airports", resolve: fieldContext => airportRepository.GetAll());
         }
     }
 }

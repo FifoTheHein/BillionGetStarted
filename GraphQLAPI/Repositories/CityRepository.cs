@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using GraphQLAPI;
 using GraphQLAPI.Data;
@@ -18,7 +20,9 @@ namespace CarvedRock.Api.Repositories
 
         public async Task<IEnumerable<City>> GetAll()
         {
-            return await _dbContext.City.ToListAsync();
+            return await _dbContext.City
+                .Include(city => city.Airports)
+                .ToListAsync();
         }
 
         public async Task<City> GetOne(string title)
@@ -29,6 +33,18 @@ namespace CarvedRock.Api.Repositories
         public async Task<City> GetOne(Guid cityID)
         {
             return await _dbContext.City.SingleOrDefaultAsync(p => p.CityID == cityID);
+        }
+
+        public City GetOneNow(Guid cityID)
+        {
+            return  _dbContext.City.SingleOrDefault(p => p.CityID == cityID);
+        }
+
+        public async Task<ILookup<Guid, City>> GetForCities(IEnumerable<Guid> cityIds)
+        {
+            var cities = await _dbContext.City
+                .ToListAsync();
+            return cities.ToLookup(r => r.CityID);
         }
 
         public async Task<City> AddCity(City city)
