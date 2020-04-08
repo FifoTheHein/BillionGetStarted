@@ -6,7 +6,7 @@ namespace GraphQLAPI.GraphQL.Types
 {
     public class CityType: ObjectGraphType<City>
     {
-        public CityType(AirportRepository airportRepository, IDataLoaderContextAccessor dataLoaderAccessor)
+        public CityType() //AirportRepository airportRepository, IDataLoaderContextAccessor dataLoaderAccessor
         {
             Field(c => c.CityID, type: typeof(IdGraphType)).Description("The Unique Identifier Guid of the City");
             Field(c => c.Title).Description("The name of the City");

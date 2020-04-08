@@ -6,7 +6,7 @@ namespace GraphQLAPI.GraphQL.Types
 {
     public class AirportType : ObjectGraphType<Airport>
     {
-        public AirportType(CityRepository cityRepository, IDataLoaderContextAccessor dataLoaderAccessor)
+        public AirportType()
         {
             Field(a => a.AirportID, type: typeof(IdGraphType));
             Field(a => a.Title).Description("The name of the Airport");
@@ -18,11 +18,6 @@ namespace GraphQLAPI.GraphQL.Types
             Field<CityType>()
                 .Name("city")
                 .Resolve(resolve: ctx => ctx.Source.City);
-                
-
-
-
-
         }
     }
 }
