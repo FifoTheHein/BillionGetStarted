@@ -3,10 +3,12 @@ bin-debug/
 bin-release/
 [Oo]bj/
 [Bb]in/
+[Dd]ebug*/
+[Rr]elease*/
+_ReSharper*/
 
 # Other files and folders
 .vs/
-obj/
 
 # Executables
 *.swf
