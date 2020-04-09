@@ -1,58 +1,60 @@
-﻿using System;
-using GraphQL;
-using GraphQL.Types;
+﻿using GraphQL.Types;
 using GraphQLAPI.GraphQL.Types;
 using GraphQLAPI.Repositories;
 
 namespace GraphQLAPI.GraphQL
 {
-    public class BillionMutation: ObjectGraphType
+    public partial class BillionMutation : ObjectGraphType
     {
         public BillionMutation(AirportRepository airportRepository, CityRepository cityRepository)
         {
+            _cityRepository = cityRepository;
+            _airportRepository = airportRepository;
+
             FieldAsync<CityType>(
-                "mutateCity",
+                name: "city",
+                description: "Add or edit an exiting city entry",
                 arguments: new QueryArguments(
-                    new QueryArgument<NonNullGraphType<CityInputType>> {Name = "city"}), 
-               
-                resolve: async context =>
-                {
-                    var city = context.GetArgument<City>("city");
-                    City result;
+                    new QueryArgument<NonNullGraphType<CityInputType>>
+                    {
+                        Name = "city",
+                        Description = "Set the cityID on the input object to edit, leave it blank or set to an empty Guid to add."
+                    }),
+                resolve: City);
 
-                    if(city.CityID == Guid.Empty)
-                        result = await cityRepository.AddCity(city);
-                    else
-                        result = await cityRepository.UpdateCity(city);
-
-                    if(result == null)
-                        context.Errors.Add(new ExecutionError($"Could not find city with specified cityID '{city.CityID}'. Nothing updated / added."));
-
-                    return city;
-                });
+            FieldAsync<CityType>(
+                name: "deleteCity",
+                description: "Delete a city",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<IdGraphType>>
+                    {
+                        Name = "cityID",
+                        Description = "The ID of the city to delete"
+                    }),
+                resolve: DeleteCity
+                );
 
             FieldAsync<AirportType>(
-                "mutateAirport",
+                name: "airport",
+                description: "Add or edit an exiting airport entry",
                 arguments: new QueryArguments(
-                    new QueryArgument<NonNullGraphType<AirportInputType>> {Name = "airport"}), 
-               
-                resolve: async context =>
-                {
-                    var airport = context.GetArgument<Airport>("airport");
+                    new QueryArgument<NonNullGraphType<AirportInputType>>
+                    {
+                        Name = "airport",
+                        Description = "Set the airportID on the input object to edit, leave it blank or set to an empty Guid to add."
+                    }),
+                resolve: Airport);
 
-                    Airport result;
-
-                    if(airport.AirportID == Guid.Empty)
-                        result = await airportRepository.AddAirport(airport);
-                    else
-                        result = await airportRepository.UpdateAirport(airport);
-
-                    if(result == null)
-                        context.Errors.Add(new ExecutionError($"Could not find airport with specified airportID '{airport.AirportID}'. Nothing updated / added."));
-
-                    return airport;
-                });
-            
+            FieldAsync<AirportType>(
+                name: "deleteAirport",
+                description: "Delete an airport",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<IdGraphType>>
+                    {
+                        Name = "airportID",
+                        Description = "The ID of the airport to delete"
+                    }),
+                resolve: DeleteAirport);
         }
     }
 }

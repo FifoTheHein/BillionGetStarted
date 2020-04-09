@@ -19,26 +19,49 @@ namespace GraphQLAPI.Repositories
         public async Task<IEnumerable<Airport>> GetAll()
         {
             return await _dbContext.Airport
+                .Where(a=>a.IsDeleted == false)
                 .Include(airport => airport.City)
                 .ToListAsync();
         }
 
         public async Task<Airport> GetOne(string IATACode)
         {
-            return await _dbContext.Airport.SingleOrDefaultAsync(p => p.IATACode == IATACode);
+            return await _dbContext.Airport
+                .Where(a=>a.IsDeleted == false)
+                .Include(airport => airport.City)
+                .SingleOrDefaultAsync(p => p.IATACode == IATACode);
         }
 
         public async Task<Airport> GetOne(Guid airportID)
         {
-            return await _dbContext.Airport.SingleOrDefaultAsync(p => p.AirportID == airportID);
+            return await _dbContext.Airport
+                .Where(a=>a.IsDeleted == false)
+                .Include(airport => airport.City)
+                .SingleOrDefaultAsync(p => p.AirportID == airportID);
         }
 
         public async Task<ILookup<Guid, Airport>> GetForCities(IEnumerable<Guid> cityIds)
         {
             var airports = await _dbContext.Airport
                 .Where(pr => cityIds.Contains(pr.CityID))
+                .Where(a=>a.IsDeleted == false)
                 .ToListAsync();
             return airports.ToLookup(r => r.CityID);
+        }
+
+        public async Task<Airport> Delete(Guid airportID)
+        {
+            var dbAirport = await GetOne(airportID);
+
+            if (dbAirport == null)
+            {
+                return null;
+            }
+
+            dbAirport.IsDeleted = true;
+           
+            await _dbContext.SaveChangesAsync();
+            return dbAirport;
         }
 
         public async Task<Airport> AddAirport(Airport airport)

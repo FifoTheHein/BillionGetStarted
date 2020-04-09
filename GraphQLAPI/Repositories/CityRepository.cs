@@ -19,30 +19,59 @@ namespace GraphQLAPI.Repositories
         public async Task<IEnumerable<City>> GetAll()
         {
             return await _dbContext.City
+                .Where(c=>c.IsDeleted == false)
                 .Include(city => city.Airports)
                 .ToListAsync();
         }
 
         public async Task<City> GetOne(string title)
         {
-            return await _dbContext.City.SingleOrDefaultAsync(p => p.Title == title);
+            return await _dbContext.City
+                .Where(c=>c.IsDeleted == false)
+                .Include(c=>c.Airports)
+                .SingleOrDefaultAsync(p => p.Title == title);
         }
 
-        public async Task<City> GetOne(Guid cityID)
+        public async Task<City> GetOne(Guid cityId)
         {
-            return await _dbContext.City.SingleOrDefaultAsync(p => p.CityID == cityID);
+            return await _dbContext.City
+                .Where(c=>c.IsDeleted == false)
+                .Include(c=>c.Airports)
+                .SingleOrDefaultAsync(p => p.CityID == cityId);
         }
 
-        public City GetOneNow(Guid cityID)
+        public City GetOneNow(Guid cityId)
         {
-            return  _dbContext.City.SingleOrDefault(p => p.CityID == cityID);
+            return  _dbContext.City
+                .Where(c=>c.IsDeleted == false)
+                .Include(c=>c.Airports)
+                .SingleOrDefault(p => p.CityID == cityId);
         }
 
         public async Task<ILookup<Guid, City>> GetForCities(IEnumerable<Guid> cityIds)
         {
             var cities = await _dbContext.City
+                .Where(c=>c.IsDeleted == false)
                 .ToListAsync();
             return cities.ToLookup(r => r.CityID);
+        }
+
+        public async Task<City> Delete(Guid cityId)
+        {
+            var dbCity = await GetOne(cityId);
+
+            if (dbCity == null)
+            {
+                return null;
+            }
+
+            foreach (Airport airport in dbCity.Airports) 
+                airport.IsDeleted = true;
+
+            dbCity.IsDeleted = true;
+           
+            await _dbContext.SaveChangesAsync();
+            return dbCity;
         }
 
         public async Task<City> AddCity(City city)
