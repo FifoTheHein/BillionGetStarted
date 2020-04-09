@@ -10,6 +10,7 @@ _ReSharper*/
 
 # Other files and folders
 .vs/
+*.user
 
 # Executables
 *.swf
