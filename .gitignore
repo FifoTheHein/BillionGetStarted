@@ -6,6 +6,7 @@ bin-release/
 [Dd]ebug*/
 [Rr]elease*/
 _ReSharper*/
+.config/
 
 # Other files and folders
 .vs/
