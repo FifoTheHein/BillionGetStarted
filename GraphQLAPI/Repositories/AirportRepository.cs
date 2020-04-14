@@ -21,6 +21,7 @@ namespace GraphQLAPI.Repositories
             return await _dbContext.Airport
                 .Where(a=>a.IsDeleted == false)
                 .Include(airport => airport.City)
+                .ThenInclude(city =>city.Country)
                 .ToListAsync();
         }
 

@@ -5,6 +5,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GraphQLAPI
 {
+    public class Country
+    {
+        public Guid CountryID { get; set; }
+        public bool IsDeleted { get; set; }
+        [Required]
+        [MaxLength(200)]
+        public string Title { get; set; }
+        public List<City> Cities { get; } = new List<City>();
+    }
+
     public class City
     {
         public Guid CityID { get; set; }
@@ -14,6 +24,9 @@ namespace GraphQLAPI
         public string Title { get; set; }
 
         public List<Airport> Airports { get; } = new List<Airport>();
+
+        public Guid CountryID { get; set; }
+        public Country Country { get; set; }
     }
 
     public class Airport
@@ -42,5 +55,5 @@ namespace GraphQLAPI
 
     }
 
-   
+
 }

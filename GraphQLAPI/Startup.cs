@@ -41,6 +41,7 @@ namespace GraphQLAPI
 
             services.AddScoped<CityRepository>();
             services.AddScoped<AirportRepository>();
+            services.AddScoped<CountryRepository>();
 
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
             services.AddScoped<BillionSchema>();

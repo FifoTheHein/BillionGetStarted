@@ -12,5 +12,8 @@ namespace GraphQLAPI.Data
         public DbSet<City> City { get; set; }
 
         public DbSet<Airport> Airport { get; set; }
+
+        public DbSet<Country> Country { get; set; }
+
     }
 }

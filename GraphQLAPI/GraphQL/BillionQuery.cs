@@ -8,7 +8,7 @@ namespace GraphQLAPI.GraphQL.Queries
 {
     public partial class BillionQuery: ObjectGraphType
     {
-        public BillionQuery(CityRepository cityRepository, AirportRepository airportRepository)
+        public BillionQuery(CityRepository cityRepository, AirportRepository airportRepository, CountryRepository countryRepository)
         {
             Field<ListGraphType<CityType>>("cityList", description: "Query to get a list of cities", resolve: fieldContext => cityRepository.GetAll());
 
@@ -30,6 +30,20 @@ namespace GraphQLAPI.GraphQL.Queries
             {
                 var airportId = context.GetArgument<Guid>("airportID");
                 return airportRepository.GetOne(airportId);
+            });
+
+
+        Field<ListGraphType<CountryType>>("countryList", description: "Query to get a list of countries", resolve: fieldContext => countryRepository.GetAll());
+
+        Field<ListGraphType<CountryType>>("countryListWithChildren", description: "Query to get a list of countries, with all child objects", resolve: fieldContext => countryRepository.GetAllWithChildren());
+
+        Field<CountryType>()
+            .Name("country")
+            .Argument<NonNullGraphType<IdGraphType>>("countryID", "The ID of the country to fetch")
+            .Resolve(context =>
+            {
+                var countryId = context.GetArgument<Guid>("countryID");
+                return countryRepository.GetOne(countryId);
             });
 
         }
