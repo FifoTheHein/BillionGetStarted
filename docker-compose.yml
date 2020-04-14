@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  geography:
+    image: ${DOCKER_REGISTRY-}geography
+    build:
+      context: .
+      dockerfile: Geography/Dockerfile
+
+
+  geographysql:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    environment:
+      - SA_PASSWORD=!8H8nOHa20p!
+      - ACCEPT_EULA=Y
+    ports:
+      - "5434:1433"
