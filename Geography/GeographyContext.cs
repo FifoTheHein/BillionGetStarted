@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Geography.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Geography

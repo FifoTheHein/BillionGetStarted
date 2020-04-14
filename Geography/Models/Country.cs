@@ -1,7 +1,6 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Geography
+namespace Geography.Models
 {
     public class Country
     { 

@@ -5,6 +5,7 @@ using System.Linq;
 using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.Configuration.Attributes;
+using Geography.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Geography.InitialiseDB
