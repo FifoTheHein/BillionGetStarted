@@ -11,30 +11,33 @@ namespace Geography.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CountryController : ControllerBase
+    public class TimezoneController : ControllerBase
     {
-        private readonly ILogger<CountryController> _logger;
+        private readonly ILogger<TimezoneController> _logger;
 
         private readonly GeographyContext _geographyContext;
 
-        public CountryController(ILogger<CountryController> logger, GeographyContext context)
+        public TimezoneController(ILogger<TimezoneController> logger, GeographyContext context)
         {
             _geographyContext = context;
             _logger = logger;
         }
 
         [HttpGet]
-        public async Task<List<Country>> Get(string continentCode = "")
+        public async Task<List<Timezone>> Get(string countryCode = "")
         {
-            if (continentCode is null || continentCode == "")
+
+            if (countryCode is null || countryCode == "")
             {
-                return await _geographyContext.Countries.ToListAsync();
+                return await _geographyContext.Timezones.ToListAsync();
             }
             else
             {
-                return await _geographyContext.Countries.Where(c=>c.Continent == continentCode).ToListAsync();
+                return await _geographyContext.Timezones
+                    .Where(t=>t.CountryCode == countryCode)
+                    .ToListAsync();
             }
-            
+
         }
     }
 }

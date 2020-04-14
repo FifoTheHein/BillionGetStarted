@@ -122,13 +122,13 @@ namespace Geography.Migrations
                         .HasMaxLength(2);
 
                     b.Property<int>("DSTOffset")
-                        .HasColumnType("int");
+                        .HasColumnType("float");
 
                     b.Property<int>("GMTOffset")
-                        .HasColumnType("int");
+                        .HasColumnType("float");
 
                     b.Property<int>("RawOffset")
-                        .HasColumnType("int");
+                        .HasColumnType("float");
 
                     b.HasKey("TimeZoneId");
 
